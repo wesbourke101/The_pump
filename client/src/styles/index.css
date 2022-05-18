@@ -1,0 +1,74 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* background-image: linear-gradient(#F6FAF7, #E7EAA8, #B4BB72, #303E27 ); */
+  background-color: #F6FAF7;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.map-container {
+  height: 60vh;
+  width: 100%
+}
+
+.mapsDiv {
+  background-color: black;
+  width: 60vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+
+.mainProfile {
+  align-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 90vh;
+  border: solid #E7EAA8 10px;
+  padding: 5px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #303E27;
+}
+
+li {
+  float: left;
+}
+
+#link {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+#link:hover {
+  background-color: #B4BB72;
+}
+
+.userCards {
+  box-sizing: border-box;
+  width: 32em;
+  height: 10em;
+  border: solid #E7EAA8 10px;
+  margin: 1em
+}
+
+#columnDirection {
+  flex-direction: column
+}
