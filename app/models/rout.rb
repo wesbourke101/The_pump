@@ -1,0 +1,2 @@
+class Rout < ApplicationRecord
+end
