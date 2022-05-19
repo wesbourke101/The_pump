@@ -1,2 +1,0 @@
-class RoutsController < ApplicationController
-end

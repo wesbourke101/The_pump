@@ -7,7 +7,6 @@ class CreateUserAdmins < ActiveRecord::Migration[6.1]
       t.string :preferred_climbing_style
       t.boolean :is_admin
       
-
       t.timestamps
     end
   end

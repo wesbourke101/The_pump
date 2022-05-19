@@ -1,3 +1,3 @@
-class RoutSerializer < ActiveModel::Serializer
+class RouteSerializer < ActiveModel::Serializer
   attributes :id, :description, :directions, :picture, :climb_id, :approved, :longitude, :latitude
 end
