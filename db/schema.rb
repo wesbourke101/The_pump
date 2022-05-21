@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 2022_05_18_220338) do
   end
 
   create_table "user_admins", force: :cascade do |t|
+    t.string "user_name"
+    t.string "password_digest"
     t.string "first_name"
     t.string "last_name"
     t.string "profile_img"

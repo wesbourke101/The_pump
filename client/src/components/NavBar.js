@@ -8,6 +8,7 @@ function NavBar() {
           <ul>
             <li><Link id="link" to="/"> Map </Link></li>
             <li><Link id="link" to="/user_profile"> Profile </Link></li>
+            <li><Link id="link" to="/login"> Login </Link></li>
           </ul>  
         </nav>
     </div>    
