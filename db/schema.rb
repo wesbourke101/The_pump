@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2022_05_18_220338) do
   end
 
   create_table "routes", force: :cascade do |t|
+    t.string "route_name"
     t.string "description"
     t.string "directions"
     t.string "picture"

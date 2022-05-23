@@ -1,12 +1,10 @@
 import React from "react";
 import Maps from "./Maps";
 
-function Main() {
+function Main({userAddRoute, routeData}) {
   return (
     <div>
-        
-          <Maps />
-        
+      <Maps userAddRoute={userAddRoute} routeData={routeData}/>
     </div>
   );
 }

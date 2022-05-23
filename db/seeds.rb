@@ -4,7 +4,7 @@ Route.destroy_all
 UserAdmin.destroy_all
 
 50.times do
-    Route.create!(description: Faker::Quotes::Chiquito.expression, directions: Faker::Address.street_address, picture: "null" , climb_id: rand(1...50), approved: true, longitude: Faker::Address.longitude, latitude: Faker::Address.latitude)
+    Route.create!(route_name: "wesTest",description: Faker::Quotes::Chiquito.expression, directions: Faker::Address.street_address, picture: "null" , climb_id: rand(1...50), approved: true, longitude: Faker::Address.longitude, latitude: Faker::Address.latitude)
 end  
 puts "Routes created" 
 UserAdmin.create!(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, profile_img: "null", preferred_climbing_style: (['traditional', 'sport', "bouldering"]).sample, is_admin: Faker::Boolean, user_name: "wes123", password: '123' )
