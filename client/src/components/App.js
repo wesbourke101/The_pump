@@ -8,16 +8,18 @@ import SignUp from "./SignUp"
 import '../styles/index.css';
 
 function App() {
-///////////////////////////////////////////////////////////////////////////////////  
+///////////////////////////////////////////////////////////////////////////////////  login/logout actions
   const [user, setUser] = useState(null);
-  useEffect(() => {
-    fetch("/me").then((response) => {
-      if (response.ok) {
-        response.json().then((user) => setUser(user));
-      }
-    });
-  }, []);
- console.log(user)
+  const [toggleAuth, setToggleAuth] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [userId, setUserId] = useState(NaN);
+  function handleLogOut() {
+    fetch(`/logout`, {
+        method: "DELETE"
+    })
+    .then(setUser(null), setIsAdmin(false) )
+    .catch( error => console.log(error.message));
+  }
   function handleSubmit(userInfo) {
     fetch("/login", {
       method: "POST",
@@ -27,10 +29,25 @@ function App() {
       body: JSON.stringify(userInfo),
     })
       .then((r) => r.json())
-      .then((user) => console.log(user));
+      .then((userLogin) => setToggleAuth(userLogin));
   }
+  useEffect(() => {
+    fetch("/auth")
+    .then((response) => {
+      if (response.ok) {
+        response.json().then((userRes) => {
+          setUser(userRes)
+          setUserId(userRes.id)
+          if (userRes.is_admin) {
+            setIsAdmin(true)
+          }
+        });
+      }
+    });
+  }, [toggleAuth]);
+  
 ///////////////////////////////////////////////////////////////////////////////////  
-///////////////////////////////////////////////////////////////////////////////////  
+/////////////////////////////////////////////////////////////////////////////////// posts  
   function userAddRoute(formAddNewRoute) {
     fetch('/routes', {
       method: 'POST',
@@ -49,26 +66,24 @@ function App() {
   }
 ///////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////// 
-const [routeData, setRouteData] = useState([])
-  useEffect(() => {
-    fetch(`/routes`)
-    .then( res => res.json())
-    .then( data => setRouteData(data))
-    .catch( error => console.log(error.message));
-  }, [])
- 
-
+  const [routeData, setRouteData] = useState([])
+    useEffect(() => {
+      fetch(`/routes`)
+      .then( res => res.json())
+      .then( data => setRouteData(data))
+      .catch( error => console.log(error.message));
+    }, [])
 /////////////////////////////////////////////////////////////////////////////////// 
 
   return (
     <div>
       <div>
-        <Header />
+        <Header handleLogOut={handleLogOut} user={user}/>
       </div>
       <Routes>
-        <Route path="/" element={ <Main userAddRoute={userAddRoute} routeData={routeData}/>} />
-        <Route path="/user_profile" element={<UserProfile />}/>
-        <Route path="/login" element={<Login handleSubmit={handleSubmit}/>}/>
+        <Route path="/" element={ <Main userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin}/>} />
+        {user ? <Route path="/user_profile" element={<UserProfile user={user}/>}/> : null}
+        <Route path="/login" element={<Login handleSubmit={handleSubmit} handleLogOut={handleLogOut} user={user}/>}/>
         <Route path="/sign_up" element={<SignUp />}/>
       </Routes>
     </div> 

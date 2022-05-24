@@ -1,10 +1,10 @@
 import React from "react";
 import NavBar from "./NavBar";
 
-function Header() {
+function Header({handleLogOut, user}) {
   return (
     <div>
-      <NavBar />
+      <NavBar handleLogOut={handleLogOut} user={user}/>
     </div>
   );
 }

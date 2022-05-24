@@ -11,6 +11,6 @@ class RoutesController < ApplicationController
     private
     #goes under private
     def var_params
-     params.permit(:approved, :description, :latitude, :longitude, :route_name)
+     params.permit(:approved, :description, :latitude, :longitude, :route_name, :stars)
     end
 end

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/index.css"
 
-function Login({handleSubmit}) {
+function Login({handleSubmit, user}) {
     const [userInfo, setUserInfo] = useState({
         username: "",
         password: ""
@@ -18,6 +18,7 @@ function Login({handleSubmit}) {
 
     return ( 
         <div>
+            {user ? "Successfully logged in" : null}
             <div id="loginDiv">
                 <form id="loginFrom" onSubmit={loginFunction}>
                     <label>Username:</label>
@@ -31,9 +32,7 @@ function Login({handleSubmit}) {
                 <form>
                     <button id="signUpButton" type="submit"> Sign Up</button>
                 </form>
-                {/* <form onSubmit={closeWindow}>
-                    <button id="signUpButton" type="submit"> Sign Up</button>
-                </form>     */}
+            
             </div>
         </div>
     );

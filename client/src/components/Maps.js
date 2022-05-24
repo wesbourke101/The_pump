@@ -7,7 +7,7 @@ const libraries =["places"]
 
 
 
-function Maps({userAddRoute, routeData}) {
+function Maps({userAddRoute, routeData, user, isAdmin}) {
     const [openRightWindow, setOpenRightWindow] = useState(null)
     const [markerToggle, setMarkerToggle] = useState(false);
     const [selected, setSelected] = React.useState(null);
@@ -58,7 +58,7 @@ function Maps({userAddRoute, routeData}) {
         key={route.id} 
       />
     )
-
+    
   return (
     <div id="mapsMainDiv">
       <div className="mapsDiv">
@@ -115,14 +115,17 @@ function Maps({userAddRoute, routeData}) {
               </div>
             </InfoWindow>) : null}
           </GoogleMap> 
-
-          <button onClick={() => {
+          {user ? <button onClick={() => {
             setMarkerToggle(true) 
             setMarkers([])
-          }}> Create New Climb </button>   
+          }}> Create New Climb </button> 
+          : 
+            null
+          }
+ 
       </div>
       <div>
-        {openRightWindow ? <RightInfoWindow openRightWindow={openRightWindow}/> : null}
+        {openRightWindow ? <RightInfoWindow openRightWindow={openRightWindow} user={user} isAdmin={isAdmin}/> : null}
       </div>
     </div>
   );
