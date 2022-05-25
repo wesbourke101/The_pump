@@ -7,7 +7,9 @@ const libraries =["places"]
 
 
 
-function Maps({userAddRoute, routeData, user, isAdmin}) {
+function Maps({userAddRoute, routeData, user, isAdmin, postComments}) {
+    let mappedRoutes =[];
+    let filteredUserOrAdminRoute = [];
     const [openRightWindow, setOpenRightWindow] = useState(null)
     const [markerToggle, setMarkerToggle] = useState(false);
     const [selected, setSelected] = React.useState(null);
@@ -51,15 +53,23 @@ function Maps({userAddRoute, routeData, user, isAdmin}) {
     function newClimbAttributes(e) {
       setAddNewForm({...formAddNewRoute, [e.target.name]: e.target.value})
     }
-    const mappedRoutes = routeData?.map((route) => 
+    if (isAdmin == false){
+      filteredUserOrAdminRoute = routeData.filter(route => route.approved === true);
+    }
+    else if (isAdmin == true) {
+      filteredUserOrAdminRoute = routeData;
+    }
+
+    
+      mappedRoutes = filteredUserOrAdminRoute?.map((route) => 
       <MyMarker 
         setOpenRightWindow={setOpenRightWindow}
         route={route}
         key={route.id} 
       />
     )
-    // if (openRightWindow){
-    // console.log(user.id)}
+    
+    
   return (
     <div id="mapsMainDiv">
       <div className="mapsDiv">
@@ -74,6 +84,7 @@ function Maps({userAddRoute, routeData, user, isAdmin}) {
             {mappedRoutes}
             {markerToggle ?
               markers.map(marker => 
+                
                 <Marker 
                   key={marker.time.toISOString()} 
                   position={{lat: marker.lat, lng: marker.lng 
@@ -103,12 +114,20 @@ function Maps({userAddRoute, routeData, user, isAdmin}) {
               }
             }>
               <div>
-                <h2>Climb Info</h2>
+                <h2>Create new climb</h2>
                 <div>
-                  <form onSubmit={addNewClimbingRoute}>
+                  <form onSubmit={addNewClimbingRoute} sytle={{ display: "inline-block"}}>
+                    <label>Route name:</label>
+                    <br/>
                     <input name="route_name" value={formAddNewRoute.route_name} onChange={newClimbAttributes} type="type"/>
+                    <br/>
+                    <label>Describe the route:</label>
+                    <br/>
                     <input name="description" value={formAddNewRoute.description} onChange={newClimbAttributes} type="type"/>
-                    <button type="submit">[X]</button>
+                    <br/>
+                    <label>Submit to Admin for approval</label>
+                    <br/>
+                    <button type="submit">Submit</button>
                   </form> 
                 </div>
               </div>
@@ -124,7 +143,7 @@ function Maps({userAddRoute, routeData, user, isAdmin}) {
  
       </div>
       <div>
-        {openRightWindow ? <RightInfoWindow openRightWindow={openRightWindow} user={user} isAdmin={isAdmin}/> : null}
+        {openRightWindow ? <RightInfoWindow postComments={postComments} openRightWindow={openRightWindow} user={user} isAdmin={isAdmin}/> : null}
       </div>
     </div>
   );

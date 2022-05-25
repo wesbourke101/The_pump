@@ -1,13 +1,10 @@
 import React, {useState} from "react";
 import ClimbsReviews from "./ClimbsReviews";
 
-
-function UserProfile({user}) {
-    const {climbs} = user
+function UserProfile({user, appEraseFunction}) {
+    const {climbs, id} = user
     const [toggleClimbs, setToggleClimbs] = useState(false)
-        console.log(user)
-
-    const mappedClimbs = user.climbs.map((climb) => {return <ClimbsReviews climb={climb}/>} )
+    const mappedClimbs = user.climbs.map((climb) => {return <ClimbsReviews key={`${id}ClimbCard`} climb={climb} appEraseFunction={appEraseFunction}/>} )
    
     return (
         <div id="columnDirection">

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
-function ClimbsReviews ({climb}) {
+function ClimbsReviews ({climb, appEraseFunction}) {
     function eraceComment(e) {
-        console.log(e)
+        e.preventDefault();
+        let newId = parseInt(e.target.name)
+        appEraseFunction(newId)
     }
     return (
-     <div id="userCommentDiv" style={{backgroundColor: "#F6FAF7"}}>
-         <h3>{climb.comment}</h3>
-         <button onClick={eraceComment}>X</button>
-     </div>
-
+        <form onSubmit={eraceComment} name={climb.id} id="userCommentDiv" style={{backgroundColor: "#F6FAF7"}}>
+            <h3>{climb.comment}</h3>
+            <button type="sumbit"> X </button>
+        </form>
     );
 }
-
 export default ClimbsReviews;

@@ -4,12 +4,14 @@ import Header from "./Header"
 import UserProfile from "./UserProfile";
 import Main from "./Main"
 import Login from "./Login";
-import SignUp from "./SignUp"
+import SignUp from "./SignUp";
+import RouteApproval from "./RouteApproval";
 import '../styles/index.css';
 
 function App() {
 ///////////////////////////////////////////////////////////////////////////////////  login/logout actions
   const [user, setUser] = useState(null);
+  const [rerenderComment, setRerenderComment] = useState([])
   const [toggleAuth, setToggleAuth] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [userId, setUserId] = useState(NaN);
@@ -44,7 +46,7 @@ function App() {
         });
       }
     });
-  }, [toggleAuth]);
+  }, [toggleAuth, rerenderComment]);
   
 ///////////////////////////////////////////////////////////////////////////////////  
 /////////////////////////////////////////////////////////////////////////////////// posts  
@@ -65,26 +67,50 @@ function App() {
     });
   }
 ///////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////// 
+/////////////////////////////////////////////////////////////////////////////////// routes get
   const [routeData, setRouteData] = useState([])
     useEffect(() => {
       fetch(`/routes`)
       .then( res => res.json())
       .then( data => setRouteData(data))
       .catch( error => console.log(error.message));
-    }, [])
+    }, [toggleAuth])
 /////////////////////////////////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////////////////////////////////
+  function postComments(commentToPost) { 
+      fetch(`/climbs`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+      },
+      body: JSON.stringify(commentToPost)
+    })
+    .then( res => res.json())
+    .then( data => setRerenderComment(data))
+    .catch( error => console.log(error.message));
+  }
+  ///////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////
+    function appEraseFunction(id) {
+      fetch(`/climbs/${id}`, {
+          method: "DELETE"
+      })
+      .catch( error => console.log(error.message));
+    }
+  ///////////////////////////////////////////////////////////////////////////////////
 
   return (
     <div>
       <div>
-        <Header handleLogOut={handleLogOut} user={user}/>
+        <Header handleLogOut={handleLogOut} user={user} isAdmin={isAdmin}/>
       </div>
       <Routes>
-        <Route path="/" element={ <Main userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin}/>} />
-        {user ? <Route path="/user_profile" element={<UserProfile user={user}/>}/> : null}
+        <Route path="/" element={ <Main userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin} postComments={postComments}/>} />
+        {user ? <Route path="/user_profile" element={<UserProfile appEraseFunction={appEraseFunction} user={user}/>}/> : null}
         <Route path="/login" element={<Login handleSubmit={handleSubmit} handleLogOut={handleLogOut} user={user}/>}/>
         <Route path="/sign_up" element={<SignUp />}/>
+        <Route path="/route_approval" element={<RouteApproval />} />
       </Routes>
     </div> 
   );
