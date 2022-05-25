@@ -58,7 +58,8 @@ function Maps({userAddRoute, routeData, user, isAdmin}) {
         key={route.id} 
       />
     )
-    
+    // if (openRightWindow){
+    // console.log(user.id)}
   return (
     <div id="mapsMainDiv">
       <div className="mapsDiv">
@@ -107,8 +108,6 @@ function Maps({userAddRoute, routeData, user, isAdmin}) {
                   <form onSubmit={addNewClimbingRoute}>
                     <input name="route_name" value={formAddNewRoute.route_name} onChange={newClimbAttributes} type="type"/>
                     <input name="description" value={formAddNewRoute.description} onChange={newClimbAttributes} type="type"/>
-                    {/* <input onChange={newClimbAttributes} type="type"/>
-                    <input onChange={newClimbAttributes} type="type"/> */}
                     <button type="submit">[X]</button>
                   </form> 
                 </div>

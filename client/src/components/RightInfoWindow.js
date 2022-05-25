@@ -6,17 +6,31 @@ function RightInfoWindow({openRightWindow, user, isAdmin}) {
     const {longitude, latitude, approved, climb_id, description, directions, id, picture, route_name} = openRightWindow
     const [commentToggle, setCommentToggle] = useState(false);
     const climbs = openRightWindow.climbs;
-    const [commentToPost, setCommentToPost] = useState({})
+    const [commentToPost, setCommentToPost] = useState({
+        user_admin_id: user.id,
+        route_id: id
+    })
 
     const mappedClimbs = climbs.map((climb) => {
         return <IndividualClimbComments climb={climb}/>
     })
     function onChangeComment(e) {
-        setCommentToPost({[e.target.name]: e.target.value})
+        setCommentToPost({...commentToPost, [e.target.name]: e.target.value})
     }
     function addComment(e) {
         e.preventDefault()
         console.log(commentToPost)
+       fetch(`/climbs`, {
+           method: "POST",
+           headers: {
+               "Content-Type": "application/json",
+               Accept: "application/json"
+           },
+           body: JSON.stringify(commentToPost)
+       })
+       .then( res => res.json())
+       .then( data => console.log(data))
+       .catch( error => console.log(error.message));
         setCommentToggle(false)
         setCommentToPost({})
     }
@@ -24,7 +38,7 @@ function RightInfoWindow({openRightWindow, user, isAdmin}) {
         console.log("erased")
     }
     return (
-        <div id="routeWindowCard">
+        <div id="routeWindowCard" style={{padding: "1em"}}>
             {isAdmin ? <button onClick={eraseRoute}>Erace Route</button> : null}
             <div style={{display: "flex", flex_wrap: "row" }}>
                 <label>Route name:__</label> 
@@ -38,9 +52,9 @@ function RightInfoWindow({openRightWindow, user, isAdmin}) {
                 <label>Test:___</label>        
                 {description}
             </div>
-            <h1>Comments:</h1>
+            <h2>User Climbs:</h2>
             {user ? 
-                <button onClick={() => {setCommentToggle(true)}}> Add a comment </button>
+                <button onClick={() => {setCommentToggle(true)}}> Add your climb </button>
             : 
                 null
             }
