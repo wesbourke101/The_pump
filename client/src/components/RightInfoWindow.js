@@ -13,7 +13,7 @@ function RightInfoWindow({openRightWindow, user, isAdmin, postComments}) {
     })
 
     const mappedClimbs = climbs.map((climb) => {
-        return <IndividualClimbComments climb={climb}/>
+        return <IndividualClimbComments key={climb.id} climb={climb}/>
     })
     function onChangeComment(e) {
         setCommentToPost({...commentToPost, [e.target.name]: e.target.value})
@@ -21,8 +21,6 @@ function RightInfoWindow({openRightWindow, user, isAdmin, postComments}) {
     function addComment(e) {
         e.preventDefault();
         postComments(commentToPost);
-        ///usenavigate
-        // navigate('/')
     }
     function eraseRoute() {
         console.log("erased")

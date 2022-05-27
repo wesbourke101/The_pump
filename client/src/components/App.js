@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./Header"
 import UserProfile from "./UserProfile";
 import Main from "./Main"
@@ -9,18 +9,21 @@ import RouteApproval from "./RouteApproval";
 import '../styles/index.css';
 
 function App() {
-///////////////////////////////////////////////////////////////////////////////////  login/logout actions
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   const [rerenderComment, setRerenderComment] = useState([])
+  const [ogGearFetch, setOgGearFetch] = useState([])
   const [toggleAuth, setToggleAuth] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [userId, setUserId] = useState(NaN);
+
   function handleLogOut() {
     fetch(`/logout`, {
         method: "DELETE"
     })
     .then(setUser(null), setIsAdmin(false) )
     .catch( error => console.log(error.message));
+    navigate('/')
   }
   function handleSubmit(userInfo) {
     fetch("/login", {
@@ -32,6 +35,7 @@ function App() {
     })
       .then((r) => r.json())
       .then((userLogin) => setToggleAuth(userLogin));
+      navigate('/')
   }
   useEffect(() => {
     fetch("/auth")
@@ -46,10 +50,13 @@ function App() {
         });
       }
     });
-  }, [toggleAuth, rerenderComment]);
-  
-///////////////////////////////////////////////////////////////////////////////////  
-/////////////////////////////////////////////////////////////////////////////////// posts  
+  }, [toggleAuth]);
+  useEffect(() => {
+    fetch(`/gears`)
+    .then( res => res.json())
+    .then( data => setOgGearFetch(data))
+    .catch( error => console.log(error.message));
+  }, [])
   function userAddRoute(formAddNewRoute) {
     fetch('/routes', {
       method: 'POST',
@@ -66,8 +73,6 @@ function App() {
       console.error('Error:', error);
     });
   }
-///////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////// routes get
   const [routeData, setRouteData] = useState([])
     useEffect(() => {
       fetch(`/routes`)
@@ -75,8 +80,6 @@ function App() {
       .then( data => setRouteData(data))
       .catch( error => console.log(error.message));
     }, [toggleAuth])
-/////////////////////////////////////////////////////////////////////////////////// 
-///////////////////////////////////////////////////////////////////////////////////
   function postComments(commentToPost) { 
       fetch(`/climbs`, {
       method: "POST",
@@ -90,16 +93,33 @@ function App() {
     .then( data => setRerenderComment(data))
     .catch( error => console.log(error.message));
   }
-  ///////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////
-    function appEraseFunction(id) {
-      fetch(`/climbs/${id}`, {
-          method: "DELETE"
-      })
-      .catch( error => console.log(error.message));
-    }
-  ///////////////////////////////////////////////////////////////////////////////////
-
+  function appEraseFunction(id) {
+    fetch(`/climbs/${id}`, {
+        method: "DELETE"
+    })
+    .catch( error => console.log(error.message));
+  }
+  function deleteGearfetch(id) {
+    fetch(`/gears/${id}`, {
+        method: "DELETE"
+    })
+    .then( res => res.json())
+    .then( data => setToggleAuth(data))
+    .catch( error => console.log(error.message));
+  }
+  function createGearFetch(newGear) {
+    fetch(`/gears`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify(newGear)
+    })
+    .then( res => res.json())
+    .then( data => setOgGearFetch([...ogGearFetch, data]))
+    .catch( error => console.log(error.message));
+  }
   return (
     <div>
       <div>
@@ -107,7 +127,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={ <Main userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin} postComments={postComments}/>} />
-        {user ? <Route path="/user_profile" element={<UserProfile appEraseFunction={appEraseFunction} user={user}/>}/> : null}
+        {user ? <Route path="/user_profile" element={<UserProfile ogGearFetch={ogGearFetch} createGearFetch={createGearFetch} deleteGearfetch={deleteGearfetch} appEraseFunction={appEraseFunction} user={user}/>}/> : null}
         <Route path="/login" element={<Login handleSubmit={handleSubmit} handleLogOut={handleLogOut} user={user}/>}/>
         <Route path="/sign_up" element={<SignUp />}/>
         <Route path="/route_approval" element={<RouteApproval />} />

@@ -7,7 +7,7 @@ function ClimbsReviews ({climb, appEraseFunction}) {
         appEraseFunction(newId)
     }
     return (
-        <form onSubmit={eraceComment} name={climb.id} id="userCommentDiv" style={{backgroundColor: "#F6FAF7"}}>
+        <form onSubmit={eraceComment} name={climb.id} id="userCommentDiv" className="prettyTextDivs">
             <h3>{climb.comment}</h3>
             <button type="sumbit"> X </button>
         </form>
