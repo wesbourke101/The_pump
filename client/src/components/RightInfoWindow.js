@@ -2,17 +2,23 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import IndividualClimbComments from "./IndividualClimbComments";
 
-function RightInfoWindow({openRightWindow, user, isAdmin, postComments}) {
+function RightInfoWindow({ogClimbsFetch, openRightWindow, user, isAdmin, postComments}) {
     const navigate = useNavigate();
     const {longitude, latitude, approved, climb_id, description, directions, id, picture, route_name} = openRightWindow
     const [commentToggle, setCommentToggle] = useState(false);
-    const climbs = openRightWindow.climbs;
+    // const climbs = openRightWindow.climbs;
     const [commentToPost, setCommentToPost] = useState({
         user_admin_id: (user ? user.id : 0),
         route_id: id
     })
-
-    const mappedClimbs = climbs.map((climb) => {
+    
+    const filteredClimbs = ogClimbsFetch.filter(climb => openRightWindow.id === climb.route_id)
+    console.log(filteredClimbs)
+    console.log(commentToPost)
+    console.log(filteredClimbs)
+    console.log(ogClimbsFetch)
+   
+    const mappedClimbs = filteredClimbs.map((climb) => {
         return <IndividualClimbComments key={climb.id} climb={climb}/>
     })
     function onChangeComment(e) {
@@ -21,6 +27,11 @@ function RightInfoWindow({openRightWindow, user, isAdmin, postComments}) {
     function addComment(e) {
         e.preventDefault();
         postComments(commentToPost);
+        setCommentToggle(false);
+        setCommentToPost({
+            user_admin_id: (user ? user.id : 0),
+            route_id: id
+        });
     }
     function eraseRoute() {
         console.log("erased")

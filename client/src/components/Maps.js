@@ -7,7 +7,7 @@ const libraries =["places"]
 
 
 
-function Maps({userAddRoute, routeData, user, isAdmin, postComments}) {
+function Maps({ogClimbsFetch, userAddRoute, routeData, user, isAdmin, postComments}) {
     let mappedRoutes =[];
     let filteredUserOrAdminRoute = [];
     const [openRightWindow, setOpenRightWindow] = useState(null)
@@ -143,7 +143,7 @@ function Maps({userAddRoute, routeData, user, isAdmin, postComments}) {
  
       </div>
       <div>
-        {openRightWindow ? <RightInfoWindow postComments={postComments} openRightWindow={openRightWindow} user={user} isAdmin={isAdmin}/> : null}
+        {openRightWindow ? <RightInfoWindow ogClimbsFetch={ogClimbsFetch} postComments={postComments} openRightWindow={openRightWindow} user={user} isAdmin={isAdmin}/> : null}
       </div>
     </div>
   );

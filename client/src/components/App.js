@@ -13,6 +13,7 @@ function App() {
   const navigate = useNavigate();
   const [rerenderComment, setRerenderComment] = useState([])
   const [ogGearFetch, setOgGearFetch] = useState([])
+  const [ogClimbsFetch, setOgClimbsFetch] = useState([])
   const [toggleAuth, setToggleAuth] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [userId, setUserId] = useState(NaN);
@@ -57,6 +58,12 @@ function App() {
     .then( data => setOgGearFetch(data))
     .catch( error => console.log(error.message));
   }, [])
+  useEffect(() => {
+    fetch(`/climbs`)
+    .then( res => res.json())
+    .then( data => setOgClimbsFetch(data))
+    .catch( error => console.log(error.message));
+  }, [])
   function userAddRoute(formAddNewRoute) {
     fetch('/routes', {
       method: 'POST',
@@ -90,7 +97,7 @@ function App() {
       body: JSON.stringify(commentToPost)
     })
     .then( res => res.json())
-    .then( data => setRerenderComment(data))
+    .then( data => setOgClimbsFetch([...ogClimbsFetch, data]))
     .catch( error => console.log(error.message));
   }
   function appEraseFunction(id) {
@@ -126,7 +133,7 @@ function App() {
         <Header handleLogOut={handleLogOut} user={user} isAdmin={isAdmin}/>
       </div>
       <Routes>
-        <Route path="/" element={ <Main userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin} postComments={postComments}/>} />
+        <Route path="/" element={ <Main ogClimbsFetch={ogClimbsFetch} userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin} postComments={postComments}/>} />
         {user ? <Route path="/user_profile" element={<UserProfile ogGearFetch={ogGearFetch} createGearFetch={createGearFetch} deleteGearfetch={deleteGearfetch} appEraseFunction={appEraseFunction} user={user}/>}/> : null}
         <Route path="/login" element={<Login handleSubmit={handleSubmit} handleLogOut={handleLogOut} user={user}/>}/>
         <Route path="/sign_up" element={<SignUp />}/>
