@@ -50,7 +50,7 @@ function RightInfoWindow({ogClimbsFetch, openRightWindow, user, isAdmin, postCom
                     <text><strong>Description:</strong> {description}</text>        
                 </div>
             </div>
-            <h2>User Climbs:</h2>
+            <h2>Tips for climb:</h2>
             {user ? 
                 <button style={{marginBottom: ".5em"}} onClick={() => {setCommentToggle(true)}}> Add your climb </button>
             : 
@@ -70,9 +70,7 @@ function RightInfoWindow({ogClimbsFetch, openRightWindow, user, isAdmin, postCom
             :
             null
             }
-                <div id="commentDivs">
                     {mappedClimbs}
-                </div>
         </div>  
 
     );

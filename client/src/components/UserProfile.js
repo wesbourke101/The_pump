@@ -3,7 +3,7 @@ import ClimbsReviews from "./ClimbsReviews";
 import TradCard from "./TradCard";
 import ModalGearPopUP from "./ModalGearPopUP";
 
-function UserProfile({ogGearFetch, user, appEraseFunction, deleteGearfetch, createGearFetch}) {
+function UserProfile({ ogClimbsFetch, ogGearFetch, user, appEraseFunction, deleteGearfetch, createGearFetch}) {
     const [modalGear, setModalGear] = useState(false);
     const [modalFromState, setModalFormState] = useState({
         number_cam: 0,
@@ -16,14 +16,19 @@ function UserProfile({ogGearFetch, user, appEraseFunction, deleteGearfetch, crea
     })
     const {climbs, id, gears} = user;
     const [toggleClimbs, setToggleClimbs] = useState(false);
-    const mappedClimbs = user.climbs.map((climb) => {return <ClimbsReviews key={`${id}ClimbCard`} climb={climb} appEraseFunction={appEraseFunction}/>} )
 
+    let userClimbById = ogClimbsFetch.filter((userClimbs) => userClimbs.user_admin_id == user.id)
+    const mappedClimbs = userClimbById.map((climb) => {return <ClimbsReviews key={`${id}ClimbCard`} climb={climb} appEraseFunction={appEraseFunction}/>} )
 ////////////////////////////////////////////////////////////////////////////////////////////
     let userGearById = ogGearFetch.filter((usergear) => usergear.user_admin_id == user.id)
     let tradGearFilter = userGearById.filter((gear) => gear.cam == true)
     let mappedTradGear = tradGearFilter.map(tradGear => { return <TradCard deleteGearfetch={deleteGearfetch} key={tradGear.id} tradGear={tradGear}/> })
 ////////////////////////////////////////////////////////////////////////////////////////////
-    
+    let nutGearFilter = userGearById.filter((gear) => gear.nut == true)
+    let mappedNutGear = nutGearFilter.map(tradGear => { return <TradCard deleteGearfetch={deleteGearfetch} key={tradGear.id} tradGear={tradGear}/> })
+
+    let camCount = mappedTradGear.length
+    let nutCount = mappedNutGear.length
     return (
         <div id="columnDirection">
             {modalGear ? <ModalGearPopUP user={user} setModalGear={setModalGear} createGearFetch={createGearFetch} modalFromState={modalFromState} setModalFormState={setModalFormState}/> : <div>
@@ -32,23 +37,42 @@ function UserProfile({ogGearFetch, user, appEraseFunction, deleteGearfetch, crea
                 </div>
                 <div className="mainProfile" style={{display: "flex", backgroundColor: "#B4BB72"}}>
                     <div className="userCards" style={{backgroundColor: "#F6FAF7"}}>
-                        <h3>User name:</h3>
-                            <div className="prettyTextDivs">
-                                <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{user.first_name} {user.last_name}</h3>
-                            </div>
-                        <h3>Perferred climbing discipline:</h3>
-                            <div className="prettyTextDivs">  
-                                <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{user.preferred_climbing_style}</h3>
-                            </div>
-                        <h3>Total climbs logged:</h3>   
-                            <div className="prettyTextDivs">
-                                <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{climbs.length}</h3>
-                            </div>
+                        <div className="profileInfoOutterDiv">
+                            <h3>User name:</h3>
+                                <div className="prettyTextDivs">
+                                    <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{user.first_name} {user.last_name}</h3>
+                                </div>
+                        </div>    
+                        <div className="profileInfoOutterDiv">
+                            <h3>Perferred climbing discipline:</h3>
+                                <div className="prettyTextDivs">  
+                                    <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{user.preferred_climbing_style}</h3>
+                                </div>
+                        </div> 
+                        <div className="profileInfoOutterDiv"> 
+                            <h3>Total climbs logged:</h3>   
+                                <div className="prettyTextDivs">
+                                    <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{userClimbById.length}</h3>
+                                </div>
+                        </div>
+                        <div className="profileInfoOutterDiv">
+                            <h3>Total cams: </h3>
+                                <div className="prettyTextDivs">
+                                    <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{camCount}</h3>
+                                </div>   
+                        </div> 
+                        <div className="profileInfoOutterDiv">
+                            <h3>Total nuts: </h3>
+                                <div className="prettyTextDivs">
+                                <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{nutCount}</h3>
+                            </div>   
+                        </div>                                  
                     </div>
                         <div className="userCards" style={{backgroundColor: "#F6FAF7"}}>
                             <button onClick={() => setModalGear(true)}>Add Gear</button>
                             <h3>Trad gear</h3>  
                             {mappedTradGear}
+                            {mappedNutGear}
                         </div>
                             <div className="userCards" style={{backgroundColor: "#F6FAF7"}}>
                                 Sport gear

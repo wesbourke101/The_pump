@@ -73,7 +73,7 @@ function Maps({ogClimbsFetch, userAddRoute, routeData, user, isAdmin, postCommen
   return (
     <div id="mapsMainDiv">
       <div className="mapsDiv">
-        <h1 id="h1MapNameBanner">The Pump</h1>
+        {/* <h1 id="h1MapNameBanner">The Pump</h1> */}
           <GoogleMap 
             zoom={zoom} 
             center={center} 

@@ -5,16 +5,19 @@ import UserProfile from "./UserProfile";
 import Main from "./Main"
 import Login from "./Login";
 import SignUp from "./SignUp";
+import Loading from "./Loading";
 import RouteApproval from "./RouteApproval";
 import '../styles/index.css';
 
 function App() {
+  let filteredDeletedGear = [];
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const [rerenderComment, setRerenderComment] = useState([])
   const [ogGearFetch, setOgGearFetch] = useState([])
   const [ogClimbsFetch, setOgClimbsFetch] = useState([])
   const [toggleAuth, setToggleAuth] = useState(null);
+  const [toggleDeleteClimb, setToggleDeleteClimb] = useState([])
   const [isAdmin, setIsAdmin] = useState(false);
   const [userId, setUserId] = useState(NaN);
 
@@ -57,13 +60,13 @@ function App() {
     .then( res => res.json())
     .then( data => setOgGearFetch(data))
     .catch( error => console.log(error.message));
-  }, [])
+  }, [toggleAuth])
   useEffect(() => {
     fetch(`/climbs`)
     .then( res => res.json())
     .then( data => setOgClimbsFetch(data))
     .catch( error => console.log(error.message));
-  }, [])
+  }, [toggleDeleteClimb])
   function userAddRoute(formAddNewRoute) {
     fetch('/routes', {
       method: 'POST',
@@ -73,9 +76,9 @@ function App() {
     body: JSON.stringify(formAddNewRoute),
     })
     .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
+    .then(data => {console.log('Success:', data);
     })
+    //////////////////////////
     .catch((error) => {
       console.error('Error:', error);
     });
@@ -90,7 +93,7 @@ function App() {
   function postComments(commentToPost) { 
       fetch(`/climbs`, {
       method: "POST",
-      headers: {
+      headers: {  
           "Content-Type": "application/json",
           Accept: "application/json"
       },
@@ -104,6 +107,8 @@ function App() {
     fetch(`/climbs/${id}`, {
         method: "DELETE"
     })
+    .then( res => res.json())
+    .then(data => setToggleDeleteClimb(data))
     .catch( error => console.log(error.message));
   }
   function deleteGearfetch(id) {
@@ -134,10 +139,11 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={ <Main ogClimbsFetch={ogClimbsFetch} userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin} postComments={postComments}/>} />
-        {user ? <Route path="/user_profile" element={<UserProfile ogGearFetch={ogGearFetch} createGearFetch={createGearFetch} deleteGearfetch={deleteGearfetch} appEraseFunction={appEraseFunction} user={user}/>}/> : null}
+        {user ? <Route path="/user_profile" element={<UserProfile ogClimbsFetch={ogClimbsFetch} ogGearFetch={ogGearFetch} createGearFetch={createGearFetch} deleteGearfetch={deleteGearfetch} appEraseFunction={appEraseFunction} user={user}/>}/> : null}
         <Route path="/login" element={<Login handleSubmit={handleSubmit} handleLogOut={handleLogOut} user={user}/>}/>
         <Route path="/sign_up" element={<SignUp />}/>
         <Route path="/route_approval" element={<RouteApproval />} />
+        <Route path="/loading" element={<Loading />} />
       </Routes>
     </div> 
   );
