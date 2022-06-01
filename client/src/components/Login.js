@@ -16,7 +16,8 @@ function Login({handleSubmit, user}) {
       console.log(userInfo)
       handleSubmit(userInfo)
     };
-    function navigateToSignUp() {
+    function navigateToSignUp(e) {
+        e.preventDefault()
         navigate('/sign_up')
     }
 
