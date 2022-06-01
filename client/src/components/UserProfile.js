@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import ClimbsReviews from "./ClimbsReviews";
+
 import TradCard from "./TradCard";
 import ModalGearPopUP from "./ModalGearPopUP";
+import { useNavigate } from "react-router-dom";
 
-function UserProfile({ ogClimbsFetch, ogGearFetch, user, appEraseFunction, deleteGearfetch, createGearFetch}) {
+function UserProfile({ setToggleDeleteClimb, ogClimbsFetch, ogGearFetch, user, appEraseFunction, deleteGearfetch, createGearFetch}) {
     const [modalGear, setModalGear] = useState(false);
     const [modalFromState, setModalFormState] = useState({
         number_cam: 0,
@@ -16,9 +18,9 @@ function UserProfile({ ogClimbsFetch, ogGearFetch, user, appEraseFunction, delet
     })
     const {climbs, id, gears} = user;
     const [toggleClimbs, setToggleClimbs] = useState(false);
-
+    const navigate = useNavigate();
     let userClimbById = ogClimbsFetch.filter((userClimbs) => userClimbs.user_admin_id == user.id)
-    const mappedClimbs = userClimbById.map((climb) => {return <ClimbsReviews key={`${id}ClimbCard`} climb={climb} appEraseFunction={appEraseFunction}/>} )
+    const mappedClimbs = userClimbById.map((climb) => {return <ClimbsReviews key={`${id}ClimbCard`} setToggleDeleteClimb={setToggleDeleteClimb}climb={climb} appEraseFunction={appEraseFunction}/>} )
 ////////////////////////////////////////////////////////////////////////////////////////////
     let userGearById = ogGearFetch.filter((usergear) => usergear.user_admin_id == user.id)
     let tradGearFilter = userGearById.filter((gear) => gear.cam == true)
@@ -27,6 +29,10 @@ function UserProfile({ ogClimbsFetch, ogGearFetch, user, appEraseFunction, delet
     let nutGearFilter = userGearById.filter((gear) => gear.nut == true)
     let mappedNutGear = nutGearFilter.map(tradGear => { return <TradCard deleteGearfetch={deleteGearfetch} key={tradGear.id} tradGear={tradGear}/> })
 
+    function editProfileButton() {
+        navigate('/edit_profile')
+    }
+ 
     let camCount = mappedTradGear.length
     let nutCount = mappedNutGear.length
     return (
@@ -37,8 +43,16 @@ function UserProfile({ ogClimbsFetch, ogGearFetch, user, appEraseFunction, delet
                 </div>
                 <div className="mainProfile" style={{display: "flex", backgroundColor: "#B4BB72"}}>
                     <div className="userCards" style={{backgroundColor: "#F6FAF7"}}>
+                        <button onClick={editProfileButton}>Edit profile</button>
+                        <h3>Profile</h3> 
                         <div className="profileInfoOutterDiv">
                             <h3>User name:</h3>
+                                <div className="prettyTextDivs">
+                                    <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{user.user_name}</h3>
+                                </div>
+                        </div>   
+                        <div className="profileInfoOutterDiv">
+                            <h3>Climber name:</h3>
                                 <div className="prettyTextDivs">
                                     <h3 style={{textDecoration: 'underline', textAlign: "center"}}>{user.first_name} {user.last_name}</h3>
                                 </div>

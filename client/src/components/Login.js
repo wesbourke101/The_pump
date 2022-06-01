@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/index.css"
 
 function Login({handleSubmit, user}) {
+    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
         username: "",
         password: ""
@@ -15,6 +16,9 @@ function Login({handleSubmit, user}) {
       console.log(userInfo)
       handleSubmit(userInfo)
     };
+    function navigateToSignUp() {
+        navigate('/sign_up')
+    }
 
     return ( 
         <div>
@@ -29,10 +33,9 @@ function Login({handleSubmit, user}) {
 
                     <button id="loginButton" type="submit"> Login </button>
                 </form>
-                <form>
+                <form onSubmit={navigateToSignUp}>
                     <button id="signUpButton" type="submit"> Sign Up</button>
-                </form>
-            
+                </form>    
             </div>
         </div>
     );

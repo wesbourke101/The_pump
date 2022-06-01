@@ -6,17 +6,12 @@ function RightInfoWindow({ogClimbsFetch, openRightWindow, user, isAdmin, postCom
     const navigate = useNavigate();
     const {longitude, latitude, approved, climb_id, description, directions, id, picture, route_name} = openRightWindow
     const [commentToggle, setCommentToggle] = useState(false);
-    // const climbs = openRightWindow.climbs;
     const [commentToPost, setCommentToPost] = useState({
         user_admin_id: (user ? user.id : 0),
         route_id: id
     })
     
     const filteredClimbs = ogClimbsFetch.filter(climb => openRightWindow.id === climb.route_id)
-    console.log(filteredClimbs)
-    console.log(commentToPost)
-    console.log(filteredClimbs)
-    console.log(ogClimbsFetch)
    
     const mappedClimbs = filteredClimbs.map((climb) => {
         return <IndividualClimbComments key={climb.id} climb={climb}/>
@@ -63,6 +58,14 @@ function RightInfoWindow({ogClimbsFetch, openRightWindow, user, isAdmin, postCom
                     <br/>
                     <textarea style={{marginTop: ".5em"}} name="comment" value={commentToPost.comment} onChange={onChangeComment}/>
                     <br/>
+                    <label>Star rating</label>
+                    <select onChange={onChangeComment} name="star_rating" value={commentToPost.value}>
+                        <option value='1'>1</option>
+                        <option value='2'>2</option>
+                        <option value='3'>3</option>
+                        <option value='4'>4</option>
+                        <option value='5'>5</option>
+                    </select>
                     <button type='submit'>Submit comment</button>
                     <button onClick={()=> { return setCommentToggle(false), setCommentToPost({})}}>Cancel</button>
                 </form>

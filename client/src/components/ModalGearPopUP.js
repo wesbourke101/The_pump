@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import Cam from "../images/cam.png";
+import Nut from "../images/climbingNuts.png";
 
 function ModalGearPopUP ({setModalGear, modalFromState, setModalFormState, createGearFetch, user}) {
     const [camToggleTernary, setCamToggleTernary] = useState(true)
@@ -54,9 +56,11 @@ function ModalGearPopUP ({setModalGear, modalFromState, setModalFormState, creat
     return (
         <div>
             <div>
-                <button onClick={() => setCamToggleTernary(!camToggleTernary)}> Add a Cam </button>
-                <button onClick={() => setNutToggleTernary(!nutToggleTernary)}> Add a HexNut </button>
-
+                <div id="camFormButtons">
+                    <button style={{marginRight: ".3em"}} onClick={() => setCamToggleTernary(!camToggleTernary)}> Add a Cam </button>
+                    <button style={{marginRight: ".3em"}} onClick={() => setNutToggleTernary(!nutToggleTernary)}> Add a HexNut </button>
+                    <button onClick={() => setModalGear(false)}> Cancel</button>
+                </div>
                 {camToggleTernary ? 
                     null 
                 : 
@@ -89,9 +93,13 @@ function ModalGearPopUP ({setModalGear, modalFromState, setModalFormState, creat
                                     <option value="Alien">Alien</option>
                                 </select>
                                 <br/>
+                                <img alt="cam" src={Cam} style={{ width: "auto", height: "2.5em"}}/>
+                                <br/>
+
                             <button type="submit">Sumbit</button>
                             <button onClick={cancelButton}>Cancel</button>
                         </form>
+                        
                     </div>
                 }
                 {nutToggleTernary ? 
@@ -119,6 +127,9 @@ function ModalGearPopUP ({setModalGear, modalFromState, setModalFormState, creat
                                 <option value="Wild Country">Wild Country</option>
                             </select>
                             <br/>
+                            <img alt="cam" src={Nut} style={{ width: "auto", height: "2.5em"}}/>
+                            <br/>
+
                             <button type="submit">Sumbit</button>
                             <button onClick={cancelButton}>Cancel</button>       
                         </form> 

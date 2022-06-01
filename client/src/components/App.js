@@ -4,9 +4,10 @@ import Header from "./Header"
 import UserProfile from "./UserProfile";
 import Main from "./Main"
 import Login from "./Login";
-import SignUp from "./SignUp";
+import EditProfile from "./EditProfile";
 import Loading from "./Loading";
 import RouteApproval from "./RouteApproval";
+import SignUpPage from "./SignUpPage";
 import '../styles/index.css';
 
 function App() {
@@ -139,11 +140,12 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={ <Main ogClimbsFetch={ogClimbsFetch} userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin} postComments={postComments}/>} />
-        {user ? <Route path="/user_profile" element={<UserProfile ogClimbsFetch={ogClimbsFetch} ogGearFetch={ogGearFetch} createGearFetch={createGearFetch} deleteGearfetch={deleteGearfetch} appEraseFunction={appEraseFunction} user={user}/>}/> : null}
+        {user ? <Route path="/user_profile" element={<UserProfile setToggleDeleteClimb={setToggleDeleteClimb} ogClimbsFetch={ogClimbsFetch} ogGearFetch={ogGearFetch} createGearFetch={createGearFetch} deleteGearfetch={deleteGearfetch} appEraseFunction={appEraseFunction} user={user}/>}/> : null}
         <Route path="/login" element={<Login handleSubmit={handleSubmit} handleLogOut={handleLogOut} user={user}/>}/>
-        <Route path="/sign_up" element={<SignUp />}/>
         <Route path="/route_approval" element={<RouteApproval />} />
         <Route path="/loading" element={<Loading />} />
+        <Route path="/sign_up" element={<SignUpPage />} />
+        <Route path="/edit_profile" element={<EditProfile setToggleAuth={setToggleAuth} user={user} />} />
       </Routes>
     </div> 
   );

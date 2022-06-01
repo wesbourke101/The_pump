@@ -12,6 +12,7 @@ function IndividualClimbComments({climb}) {
             <img src={RedMountain} style={{width: "20em", height: "auto"}}/>
             <p><strong>Climbers name:</strong> <span>{user_admin.first_name}</span></p>
             <p><strong>Climbing tips:</strong> <span>{climb.comment}</span></p>
+            <p><strong>Star rating:</strong> <span>{climb.star_rating}</span></p>
         </div>
     );
 }

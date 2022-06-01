@@ -116,7 +116,7 @@ function Maps({ogClimbsFetch, userAddRoute, routeData, user, isAdmin, postCommen
               <div>
                 <h2>Create new climb</h2>
                 <div>
-                  <form onSubmit={addNewClimbingRoute} sytle={{ display: "inline-block"}}>
+                  <form id="mapCreateDiv" onSubmit={addNewClimbingRoute} sytle={{ display: "inline-block"}}>
                     <label>Route name:</label>
                     <br/>
                     <input name="route_name" value={formAddNewRoute.route_name} onChange={newClimbAttributes} type="type"/>
@@ -134,9 +134,9 @@ function Maps({ogClimbsFetch, userAddRoute, routeData, user, isAdmin, postCommen
             </InfoWindow>) : null}
           </GoogleMap> 
           {user ? <button onClick={() => {
-            setMarkerToggle(true) 
+            setMarkerToggle(!markerToggle) 
             setMarkers([])
-          }}> Create New Climb </button> 
+          }}> {markerToggle ? "Cancel new climb": "Create new climb"} </button> 
           : 
             null
           }
