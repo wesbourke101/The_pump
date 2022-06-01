@@ -1,0 +1,2 @@
+class GolbalClimbingGearsController < ApplicationController
+end

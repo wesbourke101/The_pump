@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :golbal_climbing_gears
   post "/login", to: "sessions#create"
   get "/auth", to: "sessions#show"
   delete '/logout', to: 'sessions#destroy'

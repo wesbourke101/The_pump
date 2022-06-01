@@ -60,7 +60,6 @@ function Maps({ogClimbsFetch, userAddRoute, routeData, user, isAdmin, postCommen
       filteredUserOrAdminRoute = routeData;
     }
 
-    
       mappedRoutes = filteredUserOrAdminRoute?.map((route) => 
       <MyMarker 
         setOpenRightWindow={setOpenRightWindow}

@@ -80,7 +80,17 @@ function App() {
         body: JSON.stringify(updateRouteState)
     })
     .then( res => res.json())
-    .then( data => console.log(data))
+    .then( data => {
+      const mappedData = routeData.map((patchRoute) => { 
+          if(patchRoute.id !== data.id)
+            {
+              return (patchRoute)
+            } else {
+              return (data)
+            }  
+      })
+      setRouteData(mappedData)   
+    })
     .catch( error => console.log(error.message));
   }
   function userAddRoute(formAddNewRoute) {

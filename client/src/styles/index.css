@@ -299,3 +299,26 @@ li {
   padding-left: 1em;
   padding-right: 1em;
 }
+
+::-webkit-scrollbar {
+  background: #303E27;
+  border-radius: 20px;
+
+}
+
+::-webkit-scrollbar-button {
+  background: #B4BB72;
+  display: none;
+  
+}
+::-webkit-scrollbar-thumb {
+  background: #b1e292;
+  border-radius: 20px;
+  /* box-shadow:  10px 10px 4px black; */
+  
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 20px;
+  
+}
