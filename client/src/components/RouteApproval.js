@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import ApprovalTableAdmin from "./ApprovalTableAdmin";
 import "../styles/routeApproval.css"
 
-function RouteApproval ({routeData}) {
+function RouteApproval ({routeData, updateRouteInfo, deleteRouteAction}) {
     console.log(routeData)
     const filteredNonApprovedClimbs = routeData.filter((falseClimbs) => {return falseClimbs.approved == false})
-    const mappedNonApprovedClimbs = filteredNonApprovedClimbs.map((falseMappedClimbs) => {return <ApprovalTableAdmin falseMappedClimbs={falseMappedClimbs}/>})
+    const mappedNonApprovedClimbs = filteredNonApprovedClimbs.map((falseMappedClimbs) => {return <ApprovalTableAdmin deleteRouteAction={deleteRouteAction} updateRouteInfo={updateRouteInfo} falseMappedClimbs={falseMappedClimbs}/>})
 
     const filterApprovalClimbs = routeData.filter((falseClimbs) => {return falseClimbs.approved == true})
-    const mappedApprovedClimbs = filterApprovalClimbs.map((falseMappedClimbs) => {return <ApprovalTableAdmin falseMappedClimbs={falseMappedClimbs}/>})
+    const mappedApprovedClimbs = filterApprovalClimbs.map((falseMappedClimbs) => {return <ApprovalTableAdmin deleteRouteAction={deleteRouteAction} updateRouteInfo={updateRouteInfo} falseMappedClimbs={falseMappedClimbs}/>})
 
    
     return (

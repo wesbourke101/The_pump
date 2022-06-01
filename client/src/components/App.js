@@ -22,6 +22,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [userId, setUserId] = useState(NaN);
   const [routeData, setRouteData] = useState([])
+  const [toggleRoute, setToggleRoute] =useState([])
 
   function handleLogOut() {
     fetch(`/logout`, {
@@ -70,7 +71,7 @@ function App() {
     .catch( error => console.log(error.message));
   }, [toggleDeleteClimb])
   function updateRouteInfo(updateRouteState, id) {
-    fetch(`route/${id}`, {
+    fetch(`routes/${id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -102,7 +103,15 @@ function App() {
       .then( res => res.json())
       .then( data => setRouteData(data))
       .catch( error => console.log(error.message));
-    }, [toggleAuth])
+    }, [toggleAuth, toggleRoute])
+  function deleteRouteAction(id){
+    fetch(`/routes/${id}`, {
+        method: "DELETE"
+    })
+    .then( res => res.json())
+    .then(data => setToggleRoute(data))
+    .catch( error => console.log(error.message));
+  }
   function postComments(commentToPost) { 
       fetch(`/climbs`, {
       method: "POST",
@@ -154,7 +163,7 @@ function App() {
         <Route path="/" element={ <Main ogClimbsFetch={ogClimbsFetch} userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin} postComments={postComments}/>} />
         {user ? <Route path="/user_profile" element={<UserProfile setToggleDeleteClimb={setToggleDeleteClimb} ogClimbsFetch={ogClimbsFetch} ogGearFetch={ogGearFetch} createGearFetch={createGearFetch} deleteGearfetch={deleteGearfetch} appEraseFunction={appEraseFunction} user={user}/>}/> : null}
         <Route path="/login" element={<Login handleSubmit={handleSubmit} handleLogOut={handleLogOut} user={user}/>}/>
-        <Route path="/route_approval" element={<RouteApproval updateRouteInfo={updateRouteInfo} routeData={routeData}/>} />
+        <Route path="/route_approval" element={<RouteApproval deleteRouteAction={deleteRouteAction} updateRouteInfo={updateRouteInfo} routeData={routeData}/>} />
         <Route path="/loading" element={<Loading />} />
         <Route path="/sign_up" element={<SignUpPage />} />
         <Route path="/edit_profile" element={<EditProfile setToggleAuth={setToggleAuth} user={user} />} />

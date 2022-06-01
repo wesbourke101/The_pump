@@ -1,5 +1,5 @@
 class RoutesController < ApplicationController
-    before_action :beforeRoute, only: [:destroy]
+    before_action :beforeRoute, only: [:destroy, :update]
     def index
         render json: Route.all, status: :ok
     end
@@ -9,13 +9,17 @@ class RoutesController < ApplicationController
     end
     def destroy
         @findRoute.destroy
-        head :no_content
-        # render json: @findRoute, status :accepted
+        # head :no_content
+        render json: @findRoute, status: :accepted
+    end
+    def update
+        @findRoute.update!(var_params)
+        render json: @findRoute, status: :accepted
     end
     
     private
     def var_params
-        params.permit(:approved, :description, :latitude, :longitude, :route_name, :stars)
+        params.permit(:approved, :description, :latitude, :longitude, :route_name, :directions)
     end
     #to be used with show,update and destroy
     def beforeRoute
