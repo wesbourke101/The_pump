@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get "/auth", to: "sessions#show"
   delete '/logout', to: 'sessions#destroy'
 
-  get "/climb_id/:id", to: 'climbs#climberReturn'
+  # get "/climb_id/:id", to: 'climbs#climberReturn'
   
   resources :climbs
   resources :routes

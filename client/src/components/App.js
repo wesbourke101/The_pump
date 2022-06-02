@@ -171,7 +171,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={ <Main ogClimbsFetch={ogClimbsFetch} userAddRoute={userAddRoute} routeData={routeData} user={user} isAdmin={isAdmin} postComments={postComments}/>} />
-        {user ? <Route path="/user_profile" element={<UserProfile setToggleDeleteClimb={setToggleDeleteClimb} ogClimbsFetch={ogClimbsFetch} ogGearFetch={ogGearFetch} createGearFetch={createGearFetch} deleteGearfetch={deleteGearfetch} appEraseFunction={appEraseFunction} user={user}/>}/> : null}
+        {user ? <Route path="/user_profile" element={<UserProfile ogClimbsFetch={ogClimbsFetch} setOgClimbsFetch={setOgClimbsFetch} setToggleDeleteClimb={setToggleDeleteClimb} ogGearFetch={ogGearFetch} createGearFetch={createGearFetch} deleteGearfetch={deleteGearfetch} appEraseFunction={appEraseFunction} user={user}/>}/> : null}
         <Route path="/login" element={<Login handleSubmit={handleSubmit} handleLogOut={handleLogOut} user={user}/>}/>
         <Route path="/route_approval" element={<RouteApproval deleteRouteAction={deleteRouteAction} updateRouteInfo={updateRouteInfo} routeData={routeData}/>} />
         <Route path="/loading" element={<Loading />} />

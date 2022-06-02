@@ -5,7 +5,7 @@ import TradCard from "./TradCard";
 import ModalGearPopUP from "./ModalGearPopUP";
 import { useNavigate } from "react-router-dom";
 
-function UserProfile({ setToggleDeleteClimb, ogClimbsFetch, ogGearFetch, user, appEraseFunction, deleteGearfetch, createGearFetch}) {
+function UserProfile({ setOgClimbsFetch, setToggleDeleteClimb, ogClimbsFetch, ogGearFetch, user, appEraseFunction, deleteGearfetch, createGearFetch}) {
     const [modalGear, setModalGear] = useState(false);
     const [modalFromState, setModalFormState] = useState({
         number_cam: 0,
@@ -20,7 +20,7 @@ function UserProfile({ setToggleDeleteClimb, ogClimbsFetch, ogGearFetch, user, a
     const [toggleClimbs, setToggleClimbs] = useState(false);
     const navigate = useNavigate();
     let userClimbById = ogClimbsFetch.filter((userClimbs) => userClimbs.user_admin_id == user.id)
-    const mappedClimbs = userClimbById.map((climb) => {return <ClimbsReviews key={`${id}ClimbCard`} setToggleDeleteClimb={setToggleDeleteClimb}climb={climb} appEraseFunction={appEraseFunction}/>} )
+    const mappedClimbs = userClimbById.map((climb) => {return <ClimbsReviews ogClimbsFetch={ogClimbsFetch} setOgClimbsFetch={setOgClimbsFetch} key={`${id}ClimbCard`} setToggleDeleteClimb={setToggleDeleteClimb}climb={climb} appEraseFunction={appEraseFunction}/>} )
 ////////////////////////////////////////////////////////////////////////////////////////////
     let userGearById = ogGearFetch.filter((usergear) => usergear.user_admin_id == user.id)
     let tradGearFilter = userGearById.filter((gear) => gear.cam == true)
@@ -32,7 +32,6 @@ function UserProfile({ setToggleDeleteClimb, ogClimbsFetch, ogGearFetch, user, a
     function editProfileButton() {
         navigate('/edit_profile')
     }
- 
     let camCount = mappedTradGear.length
     let nutCount = mappedNutGear.length
     return (

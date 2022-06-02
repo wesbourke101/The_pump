@@ -48,7 +48,7 @@ code {
   border: solid #E7EAA8 10px;
   padding: 5px;
   margin: 1em;
-  box-shadow: 0 0 1em .5em rgba(89,192,152,0.5);
+  box-shadow: 5px 5px 10px 5px black;
 }
 
 ul {
@@ -83,7 +83,7 @@ li {
   height: 30em;
   border: solid #303E27 10px;
   margin: 1em;
-  /* box-shadow: .5em .5em .2em rgba(89,192,152,0.5); */
+  box-shadow: .6em .6em .1em 0em black;
   transition: 0.3s;
   min-width: 0;
   min-height: 0;
@@ -92,7 +92,7 @@ li {
   overflow-x: hidden;
 }
 .userCards:hover {
-  box-shadow: -.5em 1em 4em rgba(89,192,152,10);
+  box-shadow: -.5em 1em 1em 1em rgba(89,192,152,10);
 }
 
 #columnDirection {
@@ -301,7 +301,7 @@ li {
 }
 
 ::-webkit-scrollbar {
-  background: #303E27;
+  background: #394a2f;
   border-radius: 20px;
 
 }
@@ -314,7 +314,6 @@ li {
 ::-webkit-scrollbar-thumb {
   background: #b1e292;
   border-radius: 20px;
-  /* box-shadow:  10px 10px 4px black; */
   
 }
 

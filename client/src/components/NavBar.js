@@ -7,7 +7,7 @@ function NavBar({handleLogOut, user, isAdmin}) {
   
   return (
     <div>  
-        <nav className="navDiv">
+        <nav style={{boxShadow: '0px 10px 10px 0px'}} className="navDiv">
         
           <ul>
             <li><Link id="link" to="/"> Map </Link></li>
