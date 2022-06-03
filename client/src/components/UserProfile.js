@@ -32,6 +32,31 @@ function UserProfile({ setOgClimbsFetch, setToggleDeleteClimb, ogClimbsFetch, og
     function editProfileButton() {
         navigate('/edit_profile')
     }
+    // function updateComments( editCommentState, passedId, ogId, ogClimbsFetch) {
+    //     fetch(`climbs/${passedId}`, {
+    //         method: "PATCH",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             Accept: "application/json"
+    //         },
+    //         body: JSON.stringify(editCommentState)
+    //     })
+    //     .then( res => res.json())
+    //     .then( data => {
+    //         const updatedMappedClimbs = ogClimbsFetch.map((climbs) => {
+    //             if(passedId !== ogId) {
+    //                 return (climbs)
+    //             } else {
+    //                 return (data)
+    //             }
+    //         })
+    //         setOgClimbsFetch(updatedMappedClimbs)
+    //     })
+    //     .catch( error => console.log(error.message));
+        
+    
+    // }
+
     let camCount = mappedTradGear.length
     let nutCount = mappedNutGear.length
     return (
@@ -88,7 +113,9 @@ function UserProfile({ setOgClimbsFetch, setToggleDeleteClimb, ogClimbsFetch, og
                             {mappedNutGear}
                         </div>
                             <div className="userCards" style={{backgroundColor: "#F6FAF7"}}>
+                                <button>Create sport gear</button>
                                 Sport gear
+
                             </div>
                 </div>
                 <div className="mainProfile" style={{display: "flex", backgroundColor: "#B4BB72"}}>

@@ -30,7 +30,7 @@ function Login({handleSubmit, user}) {
                     <input id="inputClass" name="username" type="type" onChange={userFunction} value={userInfo.username}/>
 
                     <label>Password:</label>
-                    <input id="inputClass" name="password" type="type" onChange={userFunction} value={userInfo.password}/>
+                    <input id="inputClass" name="password" type="password" onChange={userFunction} value={userInfo.password}/>
 
                     <button id="loginButton" type="submit"> Login </button>
                 </form>

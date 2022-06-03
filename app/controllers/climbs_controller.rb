@@ -20,7 +20,7 @@ class ClimbsController < ApplicationController
     private
     #goes under private
     def var_params
-        params.permit( :comment, :star_rating, :id, :climb)
+        params.permit( :comment, :star_rating, :id, :user_admin_id, :route_id, :climb)
     end
     def beforeClimb
         @findClimb = Climb.find(params[:id])

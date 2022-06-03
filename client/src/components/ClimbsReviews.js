@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 
-function ClimbsReviews ({climb, appEraseFunction, setToggleDeleteClimb, setOgClimbsFetch, ogClimbsFetch}) {
+function ClimbsReviews ({updateComments, climb, appEraseFunction, setToggleDeleteClimb, setOgClimbsFetch, ogClimbsFetch}) {
     const {id, comment, star_rating} =climb;
     const [toggleEditComment, setToggleEditComment] = useState(true);
+    const ogId = ogClimbsFetch.id;
     const [editCommentState, setEditCommentState] = useState({
         id: id,
         comment: comment,
         star_rating: star_rating
     });
-    console.log(climb)
+    const passedId =climb.id
+    const listToPass = [...ogClimbsFetch]
     function eraceComment(e) {
         e.preventDefault();
         let newId = parseInt(e.target.name)
@@ -17,6 +19,11 @@ function ClimbsReviews ({climb, appEraseFunction, setToggleDeleteClimb, setOgCli
     function changeState(e) {
         setEditCommentState({...editCommentState, [e.target.name]: e.target.value})        
     }
+    // function callBackUpdate(e, editCommentState, id, ogId, climbs, toggleEditComment) {
+    //     e.preventDefault()
+    //     updateComments(e, editCommentState, id, ogId, listToPass, climbs, toggleEditComment, passedId)
+    //     setToggleEditComment(!toggleEditComment)    
+    // }
     function updateComments(e) {
         e.preventDefault()
         console.log(editCommentState)
