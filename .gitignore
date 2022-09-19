@@ -29,3 +29,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Wes ignore stuff
+./client/env
+./client/node_modules
+
